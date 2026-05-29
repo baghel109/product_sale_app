@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.admin.dashboard');
-});
+// Route::get('/', function () {
+//     return view('layouts.frontend.register');
+// });
+
+Route::get('/register', [AuthController::class, 'register'])->name('register.view');
+Route::post('/register-save', [AuthController::class, 'registerSave'])->name('register.save');
+
