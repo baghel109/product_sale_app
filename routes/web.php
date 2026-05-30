@@ -20,4 +20,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/register', [AuthController::class, 'register'])->name('register.view');
 Route::post('/register-save', [AuthController::class, 'registerSave'])->name('register.save');
+Route::get('/user/verify/{verification_token}', [AuthController::class, 'verify'])->name('verify');
+
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'loginSave'])->name('login.save');
+
+Route::get('/front/dashboard', function(){
+    return 'front dashboard';
+})->name('front.dashboard');
+
+Route::get('/admin/dashboard', function(){
+    return 'admin dashboard';
+})->name('admin.dashboard');
+
 

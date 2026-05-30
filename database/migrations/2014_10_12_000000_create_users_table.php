@@ -18,11 +18,13 @@ return new class extends Migration
             $table->integer('is_admin')->default(0)->comment('0 => user, 1 => admin');
             $table->string('country_code')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('current')->default('inr')->comment('INR or USD currency');
+            $table->string('currency')->default('inr')->comment('INR or USD currency');
             $table->integer('email_veriifed')->default(0)->comment('0 => unverified, 1 =>verified');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->text('verification_token')->nullable();
+            $table->timestamp('token_expire_at')->nullable();
             $table->timestamps();
         });
     }
