@@ -1,15 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>EShopper - {{ env('APP_NAME')}}</title>
+    <title>EShopper - {{ env('APP_NAME') }} </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.ico') }}" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -31,16 +32,15 @@
     <!-- Topbar End -->
 
     <!-- Navbar Start -->
-    {{-- @include('layouts.navbar-layout') --}}
+    @include('layouts.frontend.navbar-layout')
     <!-- Navbar End -->
 
     @yield('content')
-
+    
     <!-- Footer Start -->
-    @include('layouts.frontend.footer-layout')
+   @include('layouts.frontend.footer-layout')
     <!-- Footer End -->
 
-   
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
@@ -49,7 +49,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('frontend/lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('frontend/lib/easing/easing.min.js')}}"></script>
     <script src="{{ asset('frontend/lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
     <!-- Contact Javascript File -->

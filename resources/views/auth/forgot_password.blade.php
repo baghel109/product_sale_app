@@ -4,12 +4,12 @@
 
    <div class="container mt-2">
     <div class="card">
-        <div class="card-header text-center text-info">Login</div>
+        <div class="card-header text-center text-info">Forgot Password</div>
         <div class="card-body">
 
                 @include('layouts.frontend.message')
 
-                <form action="{{ route('login.save')}}" method="post">
+                <form action="{{ route('forgotPassword')}}" method="post">
                         @csrf
                                             
                         <div class="mb-3">
@@ -20,17 +20,9 @@
                             @enderror
                         </div>
                          
-                        <div class="mb-3">
-                            <label>Password:</label>
-                            <input type="text" class="form-control" name="password" placeholder="Enter password"/>
-                            @error('password')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div> 
                         <div>
                             <label></label>
-                            <input type="submit" value="Login" class="btn btn-danger btn-xs" />
-                            <a href="{{ route('forgotPassword')}}" class="btn btn-info btn-xs">Forgot Password ? </a>
+                            <input type="submit" value="Forgot Password" class="btn btn-danger btn-xs" />
                         </div>
                 </form>
 

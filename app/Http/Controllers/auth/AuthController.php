@@ -5,6 +5,7 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -133,5 +134,98 @@ class AuthController extends Controller
             return abort(403, 'Something went wrong');
         }
     }
+
+    public function forgotPasswordView()
+    {
+        
+        return view('auth.forgot_password');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+
+
+        $user = user::where('email', $request->email)->first();
+
+        if(!$user){
+            return back()->with('error','Email not found.');
+        }
+        
+        $token = Str::random(50);
+
+        PasswordReset::updateOrInsert(
+            ['email'=> $request->email],
+            [
+                'email'=> $request->email,
+                'token'=> $token,
+                'created_at'=> Carbon::now()
+            ]
+        );
+        $data = [
+            'name'=> $user->name,
+            'url'=> url(config('constant.RESET_PWD').$token)
+        ];
+
+        // dd($data, config('constant'));
+
+        Mail::send('frontend.mail.reset_password', $data, function($msg) use($user){
+                $msg->to($user->email);
+                $msg->subject('Reset Password Mail');
+        });
+
+        return back()->with('success','Reset password link has sent on your email. Please check');
+
+        // return view('auth.forgot_password');
+    }
+
+    public function resetPasswordView($token)
+    {
+        // dd('reset');
+        $passwordUser = PasswordReset::where('token', $token)->first();
+
+        if(!$passwordUser){
+            return back()->with('error', 'token not match');
+        }
+
+        $user = User::where('email', $passwordUser->email)->first();
+
+        return view('auth.reset_password', compact('token', 'user'));
+    }
+
+    public function resetPasswordUpdate($token, Request $request)
+    {        
+        try{
+                  $user = User::where('id', $request->id)->first();
+        
+                    if(!$user){
+                        return back()->with('error','User not found');
+                    }
+
+                    PasswordReset::updateOrInsert(
+                        [ 'email'=> $user->email],
+                        [ 
+                            'email'=> $user->email,
+                            'token'=> $token,
+                            'created_at' => now()            
+                        ]
+                    );
+
+                    User::updateOrInsert(
+                        ['email'=> $user->email],
+                        [
+                            'password'=> Hash::make($request->password)
+                        ]
+                    );
+                    
+                    return back()->with('success', 'Password updated');
+        }catch(\exception $e){
+
+            return back()->with('error', $e->getMessage());
+
+        }
+      
+    }
+
+    
 
 }

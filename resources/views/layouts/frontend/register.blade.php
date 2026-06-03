@@ -50,8 +50,10 @@
                             <input type="submit" value="Register" class="btn btn-danger btn-xs" />
                         </div>
                 </form>
+                
         </div>
         <div class="card-footer">🙏 © 2026</div>
     </div>
+
 </div>
 @endsection
