@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,16 +54,51 @@ Route::group(['middleware'=> ['onlyAuthenticated']], function(){
 
     
         Route::get('/front/dashboard', function(){
-            return 'front dashboard';
+            return getAppData('facebook'). ' front dashboard';
         })->name('front.dashboard');
 
 });
 
-Route::group(['middleware'=> ['onlyAuthenticated','onlyAdmin']], function(){
+Route::group(['prefix'=> 'admin/', 'as'=> 'admin.', 'middleware'=> ['onlyAuthenticated','onlyAdmin']], function(){
 
-        Route::get('/admin/dashboard', function(){
-            return 'test admin dashboard';
-        })->name('admin.dashboard');
+        // Route::get('dashboard', function(){
+        //     return 'test admin dashboard';
+        // })->name('admin.dashboard');
+
+        Route::get('dashboard', [AppController::class, 'index'])->name('dashboard');
+        Route::post('save', [AppController::class, 'save'])->name('save');
+
+        // menus
+        Route::get('/menus', [MainController::class, 'index'])->name('menus');
+        Route::post('/add-menu', [MainController::class, 'addMenu'])->name('addMenu');
+        Route::get('/delete-menu/{id}', [MainController::class, 'deleteMenu'])->name('deleteMenu');
+        Route::get('/edit-menu/{id}', [MainController::class, 'editMenu'])->name('editMenu');
+        Route::put('/update-menu', [MainController::class, 'updateMenu'])->name('updateMenu');
+
+        // categories
+        Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+        Route::post('/add/category', [CategoryController::class, 'addCategory'])->name('addCategory');
+        Route::put('/edit/category', [CategoryController::class, 'editCategory'])->name('editCategory');
+        Route::put('/update/category', [CategoryController::class, 'updateCategory'])->name('updateCategory');
+        Route::get('/delete/category/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
+
+
+
+
+        
+
+
+
+        
+
+
+
+
+        
+
+
+        
+
 
 });
 

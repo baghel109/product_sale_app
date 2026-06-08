@@ -17,7 +17,6 @@ class OnlyAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        echo "OnlyAuthenticated ";
 
         if(Auth::check() ) {
             return $next($request);
